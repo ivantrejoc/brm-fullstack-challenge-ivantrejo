@@ -38,7 +38,7 @@ Purchase.belongsTo(User, {foreignKey: "idUser", targetKey: "id"});
 
 Purchase.hasMany(PurchaseItem, { foreignKey: "idPurchase", sourceKey: "invoice"});
 PurchaseItem.belongsTo(Purchase, { foreignKey: "idPurchase", targetKey: "invoice"});
-
+PurchaseItem.belongsTo(Product, { foreignKey: "idProduct", targetKey: "id"});
 
 module.exports = {
   User,

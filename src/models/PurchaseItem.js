@@ -29,7 +29,11 @@ module.exports = (sequelize) => {
       productName: {
         type: DataTypes.STRING,
         allowNull: false
-      }
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );
