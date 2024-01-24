@@ -3,7 +3,7 @@ const router = require("./router/index");
 const server = express();
 const PORT = 3001;
 const morgan = require("morgan");
-// const { conn } = require('./DB_connection');    // conexión a DB
+const { conn } = require('./DB_connection');    // conexión a DB
 
 
 server.use(morgan("dev"));
@@ -12,7 +12,7 @@ server.get("/", (req, res) =>{
    res.send("this is the server")
 })
 
-server.use((req, res, next) => {                             //middlewares, propuestos por el readme
+server.use((req, res, next) => {                             //middlewares
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');    // siempre van antes de server.listen
   res.header(
@@ -29,15 +29,16 @@ server.use((req, res, next) => {                             //middlewares, prop
 server.use(express.json());     //middleware que convierte todo el json a objeto
 server.use("/ivan-trejo-challenge", router); //middleware
 
-server.listen(PORT, ()=>{
-      console.log("Server raised at port: "+ PORT);
-      })
 
+conn.sync                             // se asegura de que la base de datos este sincronizada antes
+({force: true})                       // de levantar el server
+.then((result) => {
+  server.listen(PORT, ()=>{
+    console.log("Server raised at port: "+ PORT);
+    })      
+}).catch((err) => console.log(err));
 
-// conn.sync                             // se asegura de que la base de datos este sincronizada antes
-// ({force: false})                       // de levantar el server
-// .then((result) => {
-//   server.listen(PORT, ()=>{
-//     console.log("Server raised at port: "+ PORT);
-//     })      
-// }).catch((err) => console.log(err));
+// server.listen(PORT, ()=>{
+//    console.log("Server raised at port: "+ PORT);
+//  })
+ 
