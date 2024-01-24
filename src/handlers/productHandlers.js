@@ -1,9 +1,11 @@
 const { Router } = require("express");
+const { createProduct, getProducts } = require("../controllers/productsControllers");
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    res.status(200).json("RUTA DE PRODUCTS");
+    const products = await getProducts();
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -17,9 +19,11 @@ router.get("/:id", (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  const { batch, productName, price, stock } = req.body
   try {
-    res.status(200).json("RUTA DE CREAR UN PRODUCTS");
+    await createProduct(batch, productName, price, stock);
+    res.status(201).json("PRODUCT CREATED SUCCESSFULLY");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

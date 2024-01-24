@@ -7,8 +7,7 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-        allowNull: false
+        primaryKey: true
       },
       batch: {
         type: DataTypes.STRING,
@@ -19,16 +18,16 @@ module.exports = (sequelize) => {
         allowNull: false
       },
       price: {
-        type: DataTypes.FLOAT(11, 10),
+        type: DataTypes.FLOAT(11, 2),
         allowNull: false
       },
       stock: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        defaultValue: 0
       },
       receiptDate: {
         type: DataTypes.DATE,
-        allowNull: false
+        defaultValue: Date.now
       }
     },
     { timestamps: false }

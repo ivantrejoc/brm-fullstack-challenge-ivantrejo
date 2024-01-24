@@ -31,7 +31,7 @@ server.use("/ivan-trejo-challenge", router); //middleware
 
 
 conn.sync                             // se asegura de que la base de datos este sincronizada antes
-({force: true})                       // de levantar el server
+({force: false})                       // de levantar el server
 .then((result) => {
   server.listen(PORT, ()=>{
     console.log("Server raised at port: "+ PORT);
